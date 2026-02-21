@@ -1,10 +1,43 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <div class="container mt-5">
-    <h1 class="mb-4">Pinyin Result</h1>
-    <div class="card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Pinyin Result</h1>
+        
+        <select class="form-select w-auto" id="viewSelector" onchange="switchView()">
+            <option value="text">View as Text (Ruby)</option>
+            <option value="image">View Annotated Image</option>
+        </select>
+    </div>
+
+    <div id="textView" class="card">
         <div class="card-body" style="font-size: 1.5rem; line-height: 2.5;">
             {{ html_output | safe }}
         </div>
     </div>
+
+    <div id="imageView" class="card d-none">
+        <div class="card-body text-center">
+            <img src="{{ annotated_url }}" class="img-fluid border" alt="Annotated Result">
+        </div>
+    </div>
+
     <a href="/" class="btn btn-primary mt-4">Upload another</a>
 </div>
+
+<script>
+function switchView() {
+    const selectedView = document.getElementById('viewSelector').value;
+    const textView = document.getElementById('textView');
+    const imageView = document.getElementById('imageView');
+
+    if (selectedView === 'text') {
+        textView.classList.remove('d-none');
+        imageView.classList.add('d-none');
+    } else {
+        textView.classList.add('d-none');
+        imageView.classList.remove('d-none');
+    }
+}
+</script>
