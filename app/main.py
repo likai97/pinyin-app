@@ -21,7 +21,6 @@ def home(request: Request):
 def upload_file(request: Request, file: UploadFile = File(...)):
     image = Image.open(file.file)
     chinese_texts = pytesseract.image_to_string(image, lang='chi_sim')
-    chinese_texts = ''.join([item[1] for item in result])
     html_output = return_pinyin(chinese_texts)
     # edit the html output to include a link to go back to the home page
     return templates.TemplateResponse("output.html", {"request": request, "html_output": html_output})
